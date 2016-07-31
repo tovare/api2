@@ -1,0 +1,24 @@
+{
+  "name": "api2",
+  "version": "1.0.0",
+  "description": "API version 2 for tovare.com",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tovare/api2.git"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "dashboard"
+  ],
+  "author": "Tov Are Jacobsen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tovare/api2/issues"
+  },
+  "homepage": "https://github.com/tovare/api2#readme"
+}
