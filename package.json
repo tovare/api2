@@ -4,7 +4,7 @@
   "description": "API version 2 for tovare.com",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "doc": "docco *"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/tovare/api2/issues"
   },
-  "homepage": "https://github.com/tovare/api2#readme"
+  "homepage": "https://github.com/tovare/api2#readme",
+  "dependencies": {
+    "docco": "^0.7.0"
+  }
 }
