@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>analytics.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="README.html">
+                  README.md
+                </a>
+              
+                
+                <a class="source" href="TODO.html">
+                  TODO.md
+                </a>
+              
+                
+                <a class="source" href="analytics.html">
+                  analytics.js
+                </a>
+              
+                
+                <a class="source" href="server.html">
+                  server.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>analytics.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h2 id="google-analytics">Google Analytics</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Accessing the google analytics reporting API and intended for batch-processing.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> google = <span class="hljs-built_in">require</span>(<span class="hljs-string">'googleapis'</span>);
+<span class="hljs-keyword">var</span> analytics = google.analytics(<span class="hljs-string">'v3'</span>);
+<span class="hljs-keyword">var</span> OAuth2Client = google.auth.OAuth2;
+<span class="hljs-keyword">var</span> jsonfile = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jsonfile'</span>);
+<span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-keyword">var</span> key = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../private/dashboard-9ffb13a69a61.json'</span>)
+<span class="hljs-keyword">var</span> reports = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./reports.json'</span>)
+
+<span class="hljs-keyword">var</span> scopes = [<span class="hljs-string">"https://www.google.com/analytics/feeds"</span>]
+
+<span class="hljs-keyword">var</span> jwtClient = <span class="hljs-keyword">new</span> google.auth.JWT(key.client_email, <span class="hljs-literal">null</span>, key.private_key, scopes, <span class="hljs-literal">null</span>);
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Expires : "</span> + <span class="hljs-built_in">JSON</span>.stringify(jwtClient));
+
+<span class="hljs-comment">/*
+ * ga:pageTitle
+ * ga:pagePath
+ */</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">queryData</span>(<span class="hljs-params">analytics</span>) </span>{
+      analytics.data.realtime.get({
+        <span class="hljs-string">'auth'</span>: jwtClient,
+        <span class="hljs-string">'ids'</span>: <span class="hljs-string">'ga:78449289'</span>,
+        <span class="hljs-string">'metrics'</span>: <span class="hljs-string">'rt:activeUsers'</span>,
+        <span class="hljs-string">'dimensions'</span>: <span class="hljs-string">'rt:longitude,rt:latitude'</span>
+      }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, response</span>) </span>{
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err);
+          <span class="hljs-keyword">return</span>;
+        }
+        jsonfile.writeFile(path.resolve(__dirname,<span class="hljs-string">'/public/data/realtime.json'</span>), response, {spaces: <span class="hljs-number">2</span>},<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+          <span class="hljs-keyword">if</span>(err) <span class="hljs-built_in">console</span>.error(err)
+        })
+      });  
+    }
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">queryAllRealtime</span>(<span class="hljs-params">analytics, reports</span>) </span>{
+  reports[<span class="hljs-string">"reports"</span>].forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">query</span>)</span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Prepare a query object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> a = query[<span class="hljs-string">"query"</span>];
+    a.auth = jwtClient;
+    a.ids = <span class="hljs-string">'ga:78449289'</span>;
+  
+  
+    analytics.data.realtime.get(a,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, response</span>)</span>{
+      <span class="hljs-keyword">if</span>(err){
+        <span class="hljs-built_in">console</span>.log(err);
+        <span class="hljs-keyword">return</span>;
+      }
+
+      <span class="hljs-built_in">console</span>.log(path.resolve(__dirname, <span class="hljs-string">'../public/data/'</span>, query.name+<span class="hljs-string">".json"</span>) )
+      jsonfile.writeFile(path.resolve(__dirname,<span class="hljs-string">'../public/data/'</span>, query.name+<span class="hljs-string">".json"</span>), response, {spaces: <span class="hljs-number">2</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+        <span class="hljs-keyword">if</span> (err) <span class="hljs-built_in">console</span>.error(err);
+      })
+    })
+  })
+}
+
+
+jwtClient.authorize(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, tokens</span>) </span>{
+  <span class="hljs-keyword">if</span> (err) {
+    <span class="hljs-built_in">console</span>.log(err);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  queryAllRealtime(analytics,reports);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>queryData(analytics)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script>jQuery.noConflict();</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    </head>
+    
+    <body class="black">
+
+    <div class="container">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script>
+
+// Rob More did a writeup on a pattern for reusable and updatable charts
+// building on an earlier work by Mike Bostock where all configuration
+// items where accessible as closures aloowing you to configure the
+// chart like this:
+//
+//      d3.select("#overskrift").datum(activeUsers).height(200);
+
+// However this doesn´t address the need for updating the chart, changing
+// the dataset and smooth transitions between states.
+//
+// 
+
+
+// ### Showing a number which animates states over time.
+//
+// The transition of text requies a number
+//
+
+/*global d3*/
+d3.interval(function() {
+    d3.json("data/brukere-realtime.json", function(error, data) {
+        if(!error){
+            var activeUsers = data.totalsForAllResults['rt:activeUsers'];
+            console.log("Updated brukere-realtime: "+ activeUsers);
+            d3.select("#overskrft")
+                .data([activeUsers])
+                .html(function(d) { 
+                    return "<h1>"+d+"</h1>";
+                });
+        }else{
+            console.log("failed to update number of users online.");
+        }
+    });
+}, 4000);
+
+
+        
+        </script>
+
+
+
+        <h1 id="overskrft" class="white-text">Headline</h1>
+        <script>
+        </script>
+        <!-- Page Content goes here -->
+     </div>
+      
+    </body>
+</html>

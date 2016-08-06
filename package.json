@@ -4,7 +4,7 @@
   "description": "API version 2 for tovare.com",
   "main": "server.js",
   "scripts": {
-    "doc": "docco *"
+    "doc": "docco * ga/* public/javascript/*"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,9 @@
   },
   "homepage": "https://github.com/tovare/api2#readme",
   "dependencies": {
-    "docco": "^0.7.0"
+    "d3": "^4.2.1",
+    "docco": "^0.7.0",
+    "googleapis": "^12.0.0",
+    "jsonfile": "^2.3.1"
   }
 }

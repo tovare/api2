@@ -1,0 +1,41 @@
+{
+    "reports": [{
+            "name": "brukere-realtime",
+            "frequency": "realtime",
+            "realtime": true,
+            "query": {
+                "metrics": "rt:activeUsers"
+            },
+            "meta": {
+                "name": "Aktive brukere",
+                "description": "Brukere som er på nav.no akuratt nå"
+            }
+        }, {
+            "name": "brukere-geo-realtime",
+            "frequency": "realtime",
+            "realtime": true,
+            "query": {
+                "metrics": "rt:activeUsers",
+                "dimensions": "rt:longitude,rt:latitude"
+            },
+            "meta": {
+                "name": "Aktive brukere på planeten",
+                "description": "Her surfer de på nav.no i hele værden"
+            }
+        }, {
+            "name": "brukere-device-realtime",
+            "frequency": "realtime",
+            "realtime": true,
+            "query": {
+                "metrics": "rt:activeUsers",
+                "dimensions": "rt:deviceCategory"
+            },
+            "meta": {
+                "name": "Device",
+                "description": "Antall som bruker mobil, nettbrett eller desktop nå"
+            }
+        }
+
+
+    ]
+}
