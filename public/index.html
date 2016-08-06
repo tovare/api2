@@ -29,39 +29,69 @@
 //
 // 
 
-
-// ### Showing a number which animates states over time.
+// ### Showing a number which animates
 //
-// The transition of text requies a number
+// The number will be updated over a few seconds. This is done by
+// selecting the active transition state of the object.
+//
+// 1. Read initial data and set up the object.
+// 2. When completed, poll for new data and call update when completed.
+// 3. When new data is available, the update function is responsible for
+//    transitioning to the new number.
+//
+//
 //
 
 /*global d3*/
-d3.interval(function() {
-    d3.json("data/brukere-realtime.json", function(error, data) {
-        if(!error){
-            var activeUsers = data.totalsForAllResults['rt:activeUsers'];
-            console.log("Updated brukere-realtime: "+ activeUsers);
-            d3.select("#overskrft")
-                .data([activeUsers])
-                .html(function(d) { 
-                    return "<h1>"+d+"</h1>";
-                });
-        }else{
-            console.log("failed to update number of users online.");
-        }
-    });
-}, 4000);
+console.log("v2")
+
+
+d3.json("data/brukere-realtime.json", function(error, data) {
+    if(error){ console.log(error); }
+    var activeUsers = data.totalsForAllResults['rt:activeUsers'];
+    d3.select("#overskrft")
+        .datum([activeUsers])
+        .html(function (d) {
+            console.log("Set value to : "+d);
+            return d;
+        });
+    d3.interval(function() {
+        d3.json("data/brukere-realtime.json", function(error, data) {
+            if(!error){
+                var activeUsers = data.totalsForAllResults['rt:activeUsers'];
+                console.log("Updated brukere-realtime: "+ activeUsers);
+                d3.select("#overskrft")
+                    .transition()
+                    .duration(2000)
+                    .tween("text", function () {
+                        var node = d3.select(this);
+                        // Create a function for tween wich is called 
+                        // for each step in the transition in the interval [0,1]
+                        // where 1 is the completed tranition.
+                        var i = d3.interpolateRound(node.datum(), activeUsers);
+                        node.datum([activeUsers])
+                        return function (t) {
+                            node.text(i(t));
+                        };
+                    });
+            }else{
+                console.log("failed to update number of users online.");
+            }
+        });
+    }, 5000);
+});
+
+
 
 
         
         </script>
 
 
+<h1 id="overskrft" class="white-text">0</h1>
 
-        <h1 id="overskrft" class="white-text">Headline</h1>
-        <script>
-        </script>
-        <!-- Page Content goes here -->
+
+
      </div>
       
     </body>

@@ -74,6 +74,24 @@
 <p>npm run doc</p>
 <h2 id="ideer">Ideer</h2>
 <p><a href="http://jsfiddle.net/gp3wvm8o/">http://jsfiddle.net/gp3wvm8o/</a></p>
+<p>/<em>global later d3</em>/
+updateRealtimeData();
+var textSched = later.parse.text(‘every 20 seconds’);
+var timer = later.setTimeout(updateRealtimeData, textSched);</p>
+<p>function updateRealtimeData(){</p>
+<p>d3.json(“data/brukere-device-realtime.json”, function(error, data) {
+if(!error){
+}else{
+console.log(“failed to update devices”);
+}
+});
+d3.json(“data/brukere-geo-realtime.json”, function(error, data) {
+if(!error){
+}else{
+console.log(“failed to update geodata”);
+}
+});
+}</p>
 
             </div>
             

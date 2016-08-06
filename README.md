@@ -37,3 +37,29 @@ Gir antall brkere på geografiske punkter:
 
     http://jsfiddle.net/gp3wvm8o/
     
+ 
+    
+    
+                /*global later d3*/
+            updateRealtimeData();
+            var textSched = later.parse.text('every 20 seconds');
+            var timer = later.setTimeout(updateRealtimeData, textSched);
+
+            function updateRealtimeData(){
+                
+                
+                d3.json("data/brukere-device-realtime.json", function(error, data) {
+                    if(!error){
+                    }else{
+                        console.log("failed to update devices");
+                    }
+                });
+                d3.json("data/brukere-geo-realtime.json", function(error, data) {
+                    if(!error){
+                    }else{
+                        console.log("failed to update geodata");
+                    }
+                });
+            }
+
+

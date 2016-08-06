@@ -82,27 +82,22 @@
               <p>The API is based on express 4 which has a fairly flexible router which allows
 for a more modular design organized in router specific middleware for main
 routes.</p>
-<p>##</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-
 <span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
-
-
 
 
 <span class="hljs-keyword">var</span> app = express();
 <span class="hljs-keyword">var</span> router = express.Router();
-<span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
 
 app.use(<span class="hljs-string">'/apiv2'</span>,router);
-app.use(<span class="hljs-string">'/apiv2/ganav'</span>, express.static(__dirname+<span class="hljs-string">'/public/data'</span>) );
+app.use(<span class="hljs-string">'/apiv2/ga'</span>, express.static(__dirname+<span class="hljs-string">'/public/data'</span>) );
 
 
 router.get(<span class="hljs-string">'/'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req,res</span>) </span>{
-    res.send(<span class="hljs-string">'documentation'</span>);
+  res.send(<span class="hljs-string">'documentation'</span>);
 })</pre></div></div>
             
         </li>
@@ -114,18 +109,33 @@ router.get(<span class="hljs-string">'/'</span>,<span class="hljs-function"><spa
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>always invoked
-router.use(function(req, res, next) {
-  res.header(“Access-Control-Allow-Origin”, “*”);
-  res.header(“Access-Control-Allow-Headers”, “Origin, X-Requested-With, Content-Type, Accept”);
-  next();
-});</p>
+              <p>The bode always invoked</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Example app listening on port 3000!'</span>);
+            <div class="content"><div class='highlight'><pre>router.use(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+  res.header(<span class="hljs-string">"Access-Control-Allow-Origin"</span>, <span class="hljs-string">"*"</span>);
+  res.header(<span class="hljs-string">"Access-Control-Allow-Headers"</span>, <span class="hljs-string">"Origin, X-Requested-With, Content-Type, Accept"</span>);
+  next();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>A proxy forward is defined in the nginx configuration for requests to /apiv2
+this gives me HTTP/2 and HTTPS support. Requests over https and authenticationn for 
+external servies are the only network requirement for this server application.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'APIv2 listening on port 3000!'</span>);
 });</pre></div></div>
             
         </li>

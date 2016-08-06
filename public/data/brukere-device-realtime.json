@@ -32,20 +32,20 @@
     }
   ],
   "totalsForAllResults": {
-    "rt:activeUsers": "87"
+    "rt:activeUsers": "424"
   },
   "rows": [
     [
       "DESKTOP",
-      "42"
+      "197"
     ],
     [
       "MOBILE",
-      "36"
+      "181"
     ],
     [
       "TABLET",
-      "9"
+      "46"
     ]
   ]
 }
