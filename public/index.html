@@ -169,11 +169,7 @@ body {
 </style>
 <script>
 /*global d3 topojson*/
-/*
- * http://codepen.io/teetteet/pen/Dgvfw
- */
-console.log("________________________________");
-console.log(  );
+
 
 var width = parseInt(d3.select("#earth").style('width'));
 var height = 550;
@@ -260,7 +256,8 @@ d3.json("https://tovare.com/dashboard/data/world-110m.json", function(error, wor
         .enter()
         .append("line")
         .attr("class", "bar")
-        .attr("stroke", "white")
+        .attr("stroke", "#ffffff")
+        .attr("stroke-opacity","0.5")
         .attr("stroke-width", "4");
 
     function bgscroll() {

@@ -28,18 +28,33 @@ var rtdb = db.addCollection("rtdb");
 var counter = 0;
 var countlev = 0;
 
+  var analyticProfiles = [
+//    "ga:78449289",
+      "ga:95726205",
+      "ga:95718980",
+      "ga:95719958"
+    ];
+
+
 function queryAllRealtime(analytics, reports) {
+
+//
+//
+
 
 
   counter = counter -1;
   console.log("Counter was reduced by one and is now " + counter)
   reports["reports"].forEach(function(query){
 
+  
     if(counter <= 0){  
       // Prepare a query object.
+      var shuffleResult = d3.shuffle(analyticProfiles);
       var a = query["query"];
       a.auth = jwtClient;
-      a.ids = 'ga:78449289';
+      a.ids = analyticProfiles[0];
+      console.log("Requesting using profile " + analyticProfiles[0] + "The current list is" + JSON.stringify(analyticProfiles) + " the shuffle result was " + shuffleResult);
 
       analytics.data.realtime.get(a,function(err, response){
         if(err){
@@ -77,7 +92,7 @@ jwtClient.authorize(function(err, tokens) {
     return;
   }
   queryAllRealtime(analytics,reports);
-  d3.interval( function() { queryAllRealtime(analytics,reports) }, 7000);
+  d3.interval( function() { queryAllRealtime(analytics,reports) }, 10000);
 
   
 });

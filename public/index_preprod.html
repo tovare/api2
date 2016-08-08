@@ -256,7 +256,8 @@ d3.json("https://tovare.com/dashboard/data/world-110m.json", function(error, wor
         .enter()
         .append("line")
         .attr("class", "bar")
-        .attr("stroke", "white")
+        .attr("stroke", "#ffffff")
+        .attr("stroke-opacity","0.5")
         .attr("stroke-width", "4");
 
     function bgscroll() {
