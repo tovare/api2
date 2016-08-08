@@ -9,25 +9,32 @@
 
 var express = require('express');
 
-
 var app = express();
-var router = express.Router();
+var apirouter = express.Router();
 
-app.use('/apiv2',router);
-app.use('/apiv2/ga', express.static(__dirname+'/public/data') );
-
-
-router.get('/',function(req,res) {
-  res.send('documentation');
-})
+app.use('/apiv2',apirouter);
 
 
 // The bode always invoked
-router.use(function(req, res, next) {
+apirouter.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  console.log("CORS headers set in res");
   next();
 });
+
+// app.use('/apiv2/ga', express.static(__dirname+'/public/data') );
+// require('./ga/ga.js')
+apirouter.use('/ga',require('./ga/ga.js'));
+
+apirouter.use('/rss',require('./rss/rss.js'));
+
+apirouter.get('/',function(req,res,next) {
+  console.log("EXECUTED / ROUTER");
+  res.send('documentation');
+});
+
+
 
 //
 // A proxy forward is defined in the nginx configuration for requests to /apiv2
