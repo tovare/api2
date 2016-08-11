@@ -17,7 +17,7 @@
         </style>
 
     </head>
-    <body class="black">
+    <body class="grey darken-4">
 
 <style>
 html {
@@ -50,7 +50,7 @@ var width = 1800,
     height = 900;
 
 var svg = d3.select("body").append("svg")
-    .attr("width", width)
+    .attr("width", "100%")
     .attr("height", height);
 
 
@@ -105,10 +105,15 @@ d3.json("data/europe50geojson.topojson", function(error, europe) {
 
     
     aktivitet.selectAll("circle")
-        .data(data)
+        .data(data, function(d) {
+            return String(d[0])+String(d[1]);
+        })
         .enter()
         .append("circle")
-        .attr("cx", function (d) {
+        .sort(function(a,b) {
+        		return b[2] - a[2];
+        	})
+	    .attr("cx", function (d) {
             return projection([ d[LONG],d[LAT] ])[0];
         })
         .attr("cy", function (d) {
@@ -138,9 +143,15 @@ function updateData() {
     d3.json("https://tovare.com/apiv2/ga/rtgeo", function(error, data) {
         console.log("Oppdaterer geo aktivitet");
         if (error) throw error;
-        var sirkler =aktivitet.selectAll("circle").data(data);
+        var sirkler =aktivitet.selectAll("circle")
+        .data(data, function(d) {
+            return String(d[0])+String(d[1]);
+        });
     
         sirkler.enter().append("circle")
+        .sort(function(a,b) {
+        		return b[2] - a[2];
+        	})
         .attr("cx", function (d) {
             return projection([ d[LONG],d[LAT] ])[0];
         })
@@ -180,14 +191,6 @@ d3.json("https://tovare.com/apiv2/ga/rtusers", function(error, data) {
         .attr("font-size","150")
         .attr("fill","white")
          .style("filter", "url(#glow)")
-        .append("text")
-        .text("", function(d){
-            return d;
-        })
-        .attr("x",150)
-        .attr("y",150)
-        .attr("font-size","150")
-        .attr("fill","black")
         ;
         
         
