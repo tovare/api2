@@ -63,3 +63,20 @@ Gir antall brkere på geografiske punkter:
             }
 
 
+
+
+
+Kilde for kartdata:
+-------------------
+
+europe50geojson.json  - https://geojson-maps.kyd.com.au/ Kilde Natural Earth
+
+
+
+Eksperimenter
+--------------
+
+codepen.io
+jsfiddle.net
+jsbin
+http://cssdeck.com/

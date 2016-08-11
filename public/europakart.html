@@ -104,7 +104,7 @@ d3.json("data/europe50geojson.topojson", function(error, europe) {
 
         d3.interval(function(){
             updateData();
-        },7000);
+        },5000);
 
   });
     
@@ -170,7 +170,6 @@ d3.json("https://tovare.com/apiv2/ga/rtusers", function(error, data) {
                         // Create a function for tween wich is called 
                         // for each step in the transition in the interval [0,1]
                         // where 1 is the completed tranition.
-                        console.log("Interpolating from " + node.datum() + " to " + activeUsers)
                         var i = d3.interpolateRound(node.datum(), activeUsers);
                         node.datum([activeUsers])
                         return function (t) {

@@ -180,12 +180,12 @@ var longitudeScale = d3.scaleLinear()
   .domain([0, width])
   .range([-180, 180]);
 
-var planetProjection = d3.geoAlbers()
+var planetProjection = d3.geoOrthographic()
   .scale(200)
   .rotate([longitudeScale(current), 0])
   .translate([width / 2, height / 2])
   .clipAngle(90);
-var barProjection = d3.geoAlbers()
+var barProjection = d3.geoOrthographic()
   .scale(200)
   .rotate([longitudeScale(current), 0])
   .translate([width / 2, height / 2])
