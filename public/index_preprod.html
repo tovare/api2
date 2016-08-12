@@ -119,7 +119,7 @@ d3.json("data/europe50geojson.topojson", function(error, europe) {
         .attr("cy", function (d) {
             return projection([ d[LONG],d[LAT] ])[1];
         })
-        .attr("fill", "red")
+        .attr("fill", "white")
         .attr("fill-opacity", 0.5)
         .attr("r", function (d) {
             return 1;
@@ -129,7 +129,9 @@ d3.json("data/europe50geojson.topojson", function(error, europe) {
         .duration(2000)
         .attr("r", function (d) {
             return ca(d[VAL])*5;
-        });
+        })
+         .attr("fill", "red")
+         ;
 
         d3.interval(function(){
             updateData();
@@ -166,7 +168,7 @@ function updateData() {
         .attr("r", function (d) {
             return ca(d[VAL])*5;
         })
-        ;
+        .attr("fill", "red");
 
         sirkler.exit().remove();
 
