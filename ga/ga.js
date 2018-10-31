@@ -38,7 +38,7 @@ var countlev = 0;
 
 function queryAllRealtime(analytics, reports) {
 
-//
+// TODO: Check if realtime or not.
 //
 
 

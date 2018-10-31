@@ -23,7 +23,7 @@
   "homepage": "https://github.com/tovare/api2#readme",
   "dependencies": {
     "compression": "^1.6.2",
-    "d3": "^4.2.1",
+    "d3": "^4.2.2",
     "docco": "^0.7.0",
     "googleapis": "^12.0.0",
     "jsonfile": "^2.3.1",
