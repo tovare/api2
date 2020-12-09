@@ -12,6 +12,7 @@ var key = require('../private/dashboard-9ffb13a69a61.json')
 var reports = require('./reports.json')
 var scopes = ["https://www.google.com/analytics/feeds"]
 var jwtClient = new google.auth.JWT(key.client_email, null, key.private_key, scopes, null);
+var stathat = require('stathat');
 
 var d3 = require('d3');
 //
@@ -29,9 +30,9 @@ var counter = 0;
 var countlev = 0;
 
   var analyticProfiles = [
-//    "ga:78449289",
+  //    "ga:78449289",
       "ga:95726205",
-      "ga:95718980",
+      "ga:78449289",
       "ga:95719958"
     ];
 
@@ -65,6 +66,7 @@ function queryAllRealtime(analytics, reports) {
             countlev = 40;
           }
           counter = countlev;
+          stathat.trackEZCount("mail@tovare.com", "GA Failed", 1, function(status, json) {});
           console.log("FAILED ATTEMPT. COUNTER IS " + counter);
           return;
         }
@@ -76,7 +78,9 @@ function queryAllRealtime(analytics, reports) {
               doc = rtdb.insert({ "name" : query.name } );
           }
           doc.response = response;
+          console.log(response)
           rtdb.update(doc);
+          stathat.trackEZCount("mail@tovare.com", "GA Updated", 1, function(status, json) {});
       });
     }
   });
@@ -92,7 +96,7 @@ jwtClient.authorize(function(err, tokens) {
     return;
   }
   queryAllRealtime(analytics,reports);
-  d3.interval( function() { queryAllRealtime(analytics,reports) }, 10000);
+  d3.interval( function() { queryAllRealtime(analytics,reports) }, 15000);
 
   
 });
